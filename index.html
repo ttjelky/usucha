@@ -11,22 +11,33 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://ttjelky.github.io/usucha/assets/img/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
+  <link rel="alternate" hreflang="en" href="https://ttjelky.github.io/usucha/?lang=en" />
+  <link rel="alternate" hreflang="uk" href="https://ttjelky.github.io/usucha/?lang=uk" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Onest:wght@400;500;600&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="assets/img/hero-hills.webp" />
+  <script>
+    // pick language before first paint to avoid a flash of the wrong language
+    (function () {
+      var q = new URLSearchParams(location.search).get('lang'), s;
+      try { s = localStorage.getItem('usucha-lang'); } catch (e) {}
+      var l = q || s || ((navigator.language || '').toLowerCase().indexOf('uk') === 0 ? 'uk' : 'en');
+      document.documentElement.lang = l === 'uk' ? 'uk' : 'en';
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
   <!-- ================= HEADER ================= -->
   <header class="header" id="top">
     <nav class="header__nav" aria-label="Primary">
-      <a href="#signature">Our Matcha<sup>06</sup></a>
-      <a href="#ritual">The Ritual<sup>04</sup></a>
-      <a href="#visit">Visit<sup>01</sup></a>
+      <a href="#signature"><span data-i18n="nav.matcha">Our Matcha</span><sup>06</sup></a>
+      <a href="#ritual"><span data-i18n="nav.ritual">The Ritual</span><sup>04</sup></a>
+      <a href="#visit"><span data-i18n="nav.visit">Visit</span><sup>01</sup></a>
     </nav>
 
     <a class="logo" href="#top" aria-label="USUCHA home">
@@ -39,37 +50,41 @@
     </a>
 
     <div class="header__actions">
-      <button class="btn btn--dark btn--cart" data-open-cart aria-label="Open your order">
-        <span class="btn__label">Order Ahead</span>
+      <div class="lang" role="group" aria-label="Language / Мова">
+        <button data-lang="en" aria-pressed="true" lang="en">EN</button>
+        <button data-lang="uk" aria-pressed="false" lang="uk">UA</button>
+      </div>
+      <button class="btn btn--dark btn--cart" data-open-cart data-i18n-aria="aria.openCart" aria-label="Open your order">
+        <span class="btn__label" data-i18n="orderAhead">Order Ahead</span>
         <span class="btn__icon">
           <span class="cart-count" data-cart-count>0</span>
         </span>
       </button>
-      <button class="burger" aria-label="Open menu" aria-expanded="false" data-burger><span></span><span></span></button>
+      <button class="burger" aria-label="Menu" aria-expanded="false" data-burger><span></span><span></span></button>
     </div>
   </header>
 
   <div class="mobile-nav" data-mobile-nav hidden>
-    <a href="#signature">Our Matcha</a>
-    <a href="#ritual">The Ritual</a>
-    <a href="#menu">Full Menu</a>
-    <a href="#visit">Visit &amp; Book</a>
+    <a href="#signature" data-i18n="nav.matcha">Our Matcha</a>
+    <a href="#ritual" data-i18n="nav.ritual">The Ritual</a>
+    <a href="#menu" data-i18n="nav.menu">Full Menu</a>
+    <a href="#visit" data-i18n="nav.book">Visit &amp; Book</a>
   </div>
 
   <main id="main">
     <!-- ================= HERO ================= -->
     <section class="hero">
       <div class="hero__top">
-        <h1 class="hero__title" aria-label="Slow Whisked Matcha">
-          <span class="line"><span class="word">Slow</span></span>
-          <span class="line line--ghost"><span class="word">Whisked</span></span>
-          <span class="line"><span class="word">Matcha</span></span>
+        <h1 class="hero__title" data-i18n-aria="hero.aria" aria-label="Slow Whisked Matcha">
+          <span class="line"><span class="word" data-i18n="hero.w1">Slow</span></span>
+          <span class="line line--ghost"><span class="word" data-i18n="hero.w2">Whisked</span></span>
+          <span class="line"><span class="word" data-i18n="hero.w3">Matcha</span></span>
         </h1>
 
         <aside class="hero__aside">
           <div class="hero__links">
-            <a href="#anatomy">About Us<sup>23</sup></a>
-            <a href="#ritual">How It Works<sup>04</sup></a>
+            <a href="#anatomy"><span data-i18n="hero.about">About Us</span><sup>23</sup></a>
+            <a href="#ritual"><span data-i18n="hero.how">How It Works</span><sup>04</sup></a>
           </div>
 
           <div class="hero__proof">
@@ -78,9 +93,9 @@
               <img src="assets/img/d-yuzu.webp" alt="" />
               <img src="assets/img/hand-bowl.webp" alt="" />
             </div>
-            <p><strong data-count="38">0</strong><strong>K+</strong> <span>cups whisked this year</span></p>
+            <p><strong data-count="38">0</strong><strong>K+</strong> <span data-i18n="hero.cups">cups whisked this year</span></p>
           </div>
-          <p class="hero__lede">
+          <p class="hero__lede" data-i18n="hero.lede">
             A matcha bar &amp; small kitchen pouring first-harvest Uji tea, stone-ground and whisked to order —
             for calm energy, clear focus and slower mornings.
           </p>
@@ -89,28 +104,28 @@
 
       <div class="hero__media" data-reveal>
         <div class="hero__img" data-parallax="0.12">
-          <img src="assets/img/hero-hills.webp" alt="Green tea hills under a bright cloudy sky" />
+          <img src="assets/img/hero-hills.webp" alt="Green tea hills under a bright cloudy sky" data-i18n-alt="alt.hills" />
         </div>
 
         <ul class="chips" aria-label="Quick menu filters">
-          <li><a class="chip" href="#signature" data-filter-link="ceremonial">Ceremonial</a></li>
-          <li><a class="chip" href="#signature" data-filter-link="latte">Latte</a></li>
-          <li><a class="chip" href="#signature" data-filter-link="hojicha">Hojicha</a></li>
-          <li><a class="chip chip--icon" href="#menu" aria-label="Open the full menu">↗</a></li>
+          <li><a class="chip" href="#signature" data-filter-link="ceremonial" data-i18n="chip.ceremonial">Ceremonial</a></li>
+          <li><a class="chip" href="#signature" data-filter-link="latte" data-i18n="chip.latte">Latte</a></li>
+          <li><a class="chip" href="#signature" data-filter-link="hojicha" data-i18n="chip.hojicha">Hojicha</a></li>
+          <li><a class="chip chip--icon" href="#menu" aria-label="Full menu">↗</a></li>
           <li class="chips__break"></li>
-          <li><a class="chip" href="#signature" data-filter-link="fruit">Strawberry</a></li>
-          <li><a class="chip" href="#signature" data-filter-link="fruit">Yuzu</a></li>
-          <li><a class="chip chip--icon" href="#menu" aria-label="Open the full menu">↗</a></li>
+          <li><a class="chip" href="#signature" data-filter-link="fruit" data-i18n="chip.strawberry">Strawberry</a></li>
+          <li><a class="chip" href="#signature" data-filter-link="fruit" data-i18n="chip.yuzu">Yuzu</a></li>
+          <li><a class="chip chip--icon" href="#menu" aria-label="Full menu">↗</a></li>
         </ul>
 
         <figure class="hero__card" data-tilt>
-          <img src="assets/img/hero-drink.webp" alt="A hand holding an iced matcha latte" />
+          <img src="assets/img/hero-drink.webp" alt="A hand holding an iced matcha latte" data-i18n-alt="alt.heroDrink" />
           <figcaption>
-            <span class="eyebrow">Today's pour</span>
-            <strong>Iced Uji Latte</strong>
+            <span class="eyebrow" data-i18n="hero.today">Today's pour</span>
+            <strong data-i18n="p.uji-latte">Iced Uji Latte</strong>
             <span class="hero__card-row">
-              <span>Oat · Cane · 16 oz</span>
-              <button class="plus plus--light" data-add="uji-latte" aria-label="Add Iced Uji Latte to order">+</button>
+              <span data-i18n="hero.spec">Oat · Cane · 16 oz</span>
+              <button class="plus plus--light" data-add="uji-latte" aria-label="+">+</button>
             </span>
           </figcaption>
         </figure>
@@ -120,8 +135,8 @@
           <span data-open-status>Open today · 8:00 – 20:00</span>
         </div>
 
-        <a class="scroll-cue" href="#anatomy" aria-label="Scroll to next section">
-          <span>Scroll</span>
+        <a class="scroll-cue" href="#anatomy" aria-label="Scroll">
+          <span data-i18n="scroll">Scroll</span>
           <i></i>
         </a>
       </div>
@@ -130,8 +145,8 @@
     <!-- ================= MARQUEE ================= -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>First-harvest Uji</span><b>✺</b><span>Stone-ground daily</span><b>✺</b><span>Whisked to order</span><b>✺</b><span>Oat · Coconut · Whole milk</span><b>✺</b><span>No syrups, ever</span><b>✺</b>
-        <span>First-harvest Uji</span><b>✺</b><span>Stone-ground daily</span><b>✺</b><span>Whisked to order</span><b>✺</b><span>Oat · Coconut · Whole milk</span><b>✺</b><span>No syrups, ever</span><b>✺</b>
+        <span data-i18n="mq.1">First-harvest Uji</span><b>✺</b><span data-i18n="mq.2">Stone-ground daily</span><b>✺</b><span data-i18n="mq.3">Whisked to order</span><b>✺</b><span data-i18n="mq.4">Oat · Coconut · Whole milk</span><b>✺</b><span data-i18n="mq.5">No syrups, ever</span><b>✺</b>
+        <span data-i18n="mq.1">First-harvest Uji</span><b>✺</b><span data-i18n="mq.2">Stone-ground daily</span><b>✺</b><span data-i18n="mq.3">Whisked to order</span><b>✺</b><span data-i18n="mq.4">Oat · Coconut · Whole milk</span><b>✺</b><span data-i18n="mq.5">No syrups, ever</span><b>✺</b>
       </div>
     </div>
 
@@ -140,58 +155,46 @@
       <div class="anatomy__panel">
         <div class="anatomy__stack" data-explode>
           <div class="stack">
-            <div class="layer layer--powder" style="--i:0">
-              <span class="tag tag--l">Ceremonial<br>grade</span>
-            </div>
-            <div class="layer layer--foam" style="--i:1">
-              <span class="tag tag--r">Cold<br>foam</span>
-            </div>
-            <div class="layer layer--matcha" style="--i:2">
-              <span class="tag tag--l">Rich<br>antioxidants</span>
-            </div>
-            <div class="layer layer--milk" style="--i:3">
-              <span class="tag tag--r">Oat<br>milk</span>
-            </div>
-            <div class="layer layer--ice" style="--i:4">
-              <span class="tag tag--l">Filtered<br>ice</span>
-            </div>
-            <div class="layer layer--pearls" style="--i:5">
-              <span class="tag tag--r">Kokuto<br>syrup</span>
-            </div>
+            <div class="layer layer--powder" style="--i:0"><span class="tag tag--l" data-i18n="tag.1">Ceremonial<br>grade</span></div>
+            <div class="layer layer--foam" style="--i:1"><span class="tag tag--r" data-i18n="tag.2">Cold<br>foam</span></div>
+            <div class="layer layer--matcha" style="--i:2"><span class="tag tag--l" data-i18n="tag.3">Rich<br>antioxidants</span></div>
+            <div class="layer layer--milk" style="--i:3"><span class="tag tag--r" data-i18n="tag.4">Oat<br>milk</span></div>
+            <div class="layer layer--ice" style="--i:4"><span class="tag tag--l" data-i18n="tag.5">Filtered<br>ice</span></div>
+            <div class="layer layer--pearls" style="--i:5"><span class="tag tag--r" data-i18n="tag.6">Kokuto<br>syrup</span></div>
           </div>
 
           <div class="anatomy__note">
             <span class="anatomy__note-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M12 21c0-6 3-10 8-11-1 6-4 10-8 11Zm0 0c0-5-2.5-8.5-7-9.5 1 5 3.5 8.5 7 9.5Zm0 0V9m0 0c-1.7-1.6-2.5-3.6-2.5-6 1.6 1.2 2.5 3.2 2.5 6Zm0 0c1.7-1.6 2.5-3.6 2.5-6-1.6 1.2-2.5 3.2-2.5 6Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
             </span>
-            <p>Steady energy, clearer focus and a smooth, umami finish — six honest layers, nothing else.</p>
+            <p data-i18n="an.note">Steady energy, clearer focus and a smooth, umami finish — six honest layers, nothing else.</p>
           </div>
         </div>
 
         <div class="anatomy__copy">
-          <h2 class="display display--light">The Matcha Bar <em>Refined</em></h2>
+          <h2 class="display display--light" data-i18n="an.title">The Matcha Bar <em>Refined</em></h2>
 
-          <ul class="icon-row" aria-label="What we stand for">
-            <li title="Shade-grown leaves"><svg viewBox="0 0 24 24"><path d="M5 19c8 0 14-6 14-14C11 5 5 11 5 19Zm0 0 7-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></li>
-            <li title="Stone-ground"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 4v5.5M12 14.5V20" stroke="currentColor" stroke-width="1.5"/></svg></li>
-            <li title="Made with care"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></li>
+          <ul class="icon-row">
+            <li><svg viewBox="0 0 24 24"><path d="M5 19c8 0 14-6 14-14C11 5 5 11 5 19Zm0 0 7-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></li>
+            <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 4v5.5M12 14.5V20" stroke="currentColor" stroke-width="1.5"/></svg></li>
+            <li><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></li>
             <li class="icon-row__count">6+</li>
           </ul>
 
           <div class="anatomy__bottom">
             <div class="anatomy__text">
-              <h3>Crafted For<br>Slow Mornings</h3>
-              <p>Shade-grown for 21 days, hand-picked in May, milled on granite at 30 rpm. We whisk every cup in front of you.</p>
-              <a class="round-link" href="#ritual" aria-label="Explore the ritual">
+              <h3 data-i18n="an.h3">Crafted For<br>Slow Mornings</h3>
+              <p data-i18n="an.p">Shade-grown for 21 days, hand-picked in May, milled on granite at 30 rpm. We whisk every cup in front of you.</p>
+              <a class="round-link" href="#ritual" aria-label="The Ritual">
                 <svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
               </a>
-              <span class="round-link__label">Explore<br>The Ritual</span>
+              <span class="round-link__label" data-i18n="an.explore">Explore<br>The Ritual</span>
             </div>
 
             <figure class="photo-card" data-tilt>
-              <img src="assets/img/whisk-bowl.webp" alt="Hands whisking matcha in a ceramic bowl" loading="lazy" />
-              <span class="photo-card__badge">Matcha Moments</span>
-              <figcaption><span aria-hidden="true">⚡</span> Daily Wellness</figcaption>
+              <img src="assets/img/whisk-bowl.webp" alt="Hands whisking matcha in a ceramic bowl" data-i18n-alt="alt.whisk" loading="lazy" />
+              <span class="photo-card__badge" data-i18n="an.badge">Matcha Moments</span>
+              <figcaption><span aria-hidden="true">⚡</span> <span data-i18n="an.daily">Daily Wellness</span></figcaption>
             </figure>
           </div>
         </div>
@@ -202,104 +205,104 @@
     <section class="signature" id="signature">
       <div class="section-head">
         <h2 class="display">
-          <span class="reveal-line">Discover Cups</span>
-          <span class="reveal-line indent">Poured <em>For Every Mood</em></span>
+          <span class="reveal-line" data-i18n="sig.l1">Discover Cups</span>
+          <span class="reveal-line indent" data-i18n="sig.l2">Poured <em>For Every Mood</em></span>
         </h2>
-        <div class="filters" role="tablist" aria-label="Filter signature drinks">
-          <button role="tab" aria-selected="true" data-filter="all">All</button>
-          <button role="tab" aria-selected="false" data-filter="ceremonial">Ceremonial</button>
-          <button role="tab" aria-selected="false" data-filter="latte">Latte</button>
-          <button role="tab" aria-selected="false" data-filter="hojicha">Hojicha</button>
-          <button role="tab" aria-selected="false" data-filter="fruit">Fruit</button>
+        <div class="filters" role="tablist">
+          <button role="tab" aria-selected="true" data-filter="all" data-i18n="f.all">All</button>
+          <button role="tab" aria-selected="false" data-filter="ceremonial" data-i18n="chip.ceremonial">Ceremonial</button>
+          <button role="tab" aria-selected="false" data-filter="latte" data-i18n="chip.latte">Latte</button>
+          <button role="tab" aria-selected="false" data-filter="hojicha" data-i18n="chip.hojicha">Hojicha</button>
+          <button role="tab" aria-selected="false" data-filter="fruit" data-i18n="f.fruit">Fruit</button>
         </div>
       </div>
 
       <div class="grid" data-grid>
         <article class="product" data-cat="ceremonial" data-reveal>
-          <h3>Ceremonial Usucha</h3>
-          <div class="product__img"><img src="assets/img/d-classic.webp" alt="Iced ceremonial matcha in a short glass on a wooden coaster" loading="lazy" /></div>
-          <footer><span>From — $6.5</span><button class="plus" data-add="ceremonial" aria-label="Add Ceremonial Usucha">+</button></footer>
+          <h3 data-i18n="p.ceremonial">Ceremonial Usucha</h3>
+          <div class="product__img"><img src="assets/img/d-classic.webp" alt="" loading="lazy" /></div>
+          <footer><span><span data-i18n="from">From</span> — $6.5</span><button class="plus" data-add="ceremonial" aria-label="+">+</button></footer>
         </article>
 
         <article class="product product--dark" data-cat="latte" data-reveal>
-          <h3>Iced Uji Latte</h3>
-          <div class="product__img"><img src="assets/img/d-cloud.webp" alt="Layered iced matcha latte with a black straw" loading="lazy" /></div>
-          <footer><span>From — $6</span><button class="plus plus--light" data-add="uji-latte" aria-label="Add Iced Uji Latte">+</button></footer>
+          <h3 data-i18n="p.uji-latte">Iced Uji Latte</h3>
+          <div class="product__img"><img src="assets/img/d-cloud.webp" alt="" loading="lazy" /></div>
+          <footer><span><span data-i18n="from">From</span> — $6</span><button class="plus plus--light" data-add="uji-latte" aria-label="+">+</button></footer>
         </article>
 
         <div class="info-block" data-reveal>
-          <h3>Crafted For Modern Wellness</h3>
+          <h3 data-i18n="info.h3">Crafted For Modern Wellness</h3>
           <ul class="facts">
-            <li><span>Single-estate first-harvest leaves from Uji, Kyoto.</span><b>2026</b></li>
-            <li><span>Stone ground in small batches for velvet texture.</span><b>30rpm</b></li>
-            <li><span>Natural L-theanine — focus without the crash.</span><b>4–6h</b></li>
+            <li><span data-i18n="info.f1">Single-estate first-harvest leaves from Uji, Kyoto.</span><b>2026</b></li>
+            <li><span data-i18n="info.f2">Stone ground in small batches for velvet texture.</span><b data-i18n="info.v2">30rpm</b></li>
+            <li><span data-i18n="info.f3">Natural L-theanine — focus without the crash.</span><b data-i18n="info.v3">4–6h</b></li>
           </ul>
         </div>
 
         <div class="info-block info-block--cta" data-reveal>
-          <h3>Every Sip, A Better Ritual</h3>
-          <p>Six signatures, rotating seasonals and a quiet kitchen menu. Order ahead and skip the line — your cup is whisked the moment you arrive.</p>
-          <a class="btn btn--dark btn--sm" href="#menu"><span class="btn__label">Full Menu</span><span class="btn__icon">»</span></a>
+          <h3 data-i18n="cta2.h3">Every Sip, A Better Ritual</h3>
+          <p data-i18n="cta2.p">Six signatures, rotating seasonals and a quiet kitchen menu. Order ahead and skip the line — your cup is whisked the moment you arrive.</p>
+          <a class="btn btn--dark btn--sm" href="#menu"><span class="btn__label" data-i18n="nav.menu">Full Menu</span><span class="btn__icon">»</span></a>
         </div>
 
         <article class="product" data-cat="hojicha" data-reveal>
-          <h3>Hojicha Cloud</h3>
-          <div class="product__img"><img src="assets/img/d-oat.webp" alt="Creamy roasted tea latte with ice" loading="lazy" /></div>
-          <footer><span>From — $6</span><button class="plus" data-add="hojicha" aria-label="Add Hojicha Cloud">+</button></footer>
+          <h3 data-i18n="p.hojicha">Hojicha Cloud</h3>
+          <div class="product__img"><img src="assets/img/d-oat.webp" alt="" loading="lazy" /></div>
+          <footer><span><span data-i18n="from">From</span> — $6</span><button class="plus" data-add="hojicha" aria-label="+">+</button></footer>
         </article>
 
         <article class="product" data-cat="fruit" data-reveal>
-          <h3>Strawberry Matcha</h3>
-          <div class="product__img"><img src="assets/img/d-berry.webp" alt="Iced matcha with strawberry purée" loading="lazy" /></div>
-          <footer><span>From — $7</span><button class="plus" data-add="strawberry" aria-label="Add Strawberry Matcha">+</button></footer>
+          <h3 data-i18n="p.strawberry">Strawberry Matcha</h3>
+          <div class="product__img"><img src="assets/img/d-berry.webp" alt="" loading="lazy" /></div>
+          <footer><span><span data-i18n="from">From</span> — $7</span><button class="plus" data-add="strawberry" aria-label="+">+</button></footer>
         </article>
 
         <article class="product" data-cat="latte" data-reveal>
-          <h3>Coconut Split</h3>
-          <div class="product__img"><img src="assets/img/d-layer.webp" alt="Matcha poured over coconut milk and ice" loading="lazy" /></div>
-          <footer><span>From — $6.5</span><button class="plus" data-add="coconut" aria-label="Add Coconut Split">+</button></footer>
+          <h3 data-i18n="p.coconut">Coconut Split</h3>
+          <div class="product__img"><img src="assets/img/d-layer.webp" alt="" loading="lazy" /></div>
+          <footer><span><span data-i18n="from">From</span> — $6.5</span><button class="plus" data-add="coconut" aria-label="+">+</button></footer>
         </article>
 
         <article class="product product--dark" data-cat="fruit" data-reveal>
-          <h3>Yuzu Sparkle</h3>
-          <div class="product__img"><img src="assets/img/d-yuzu.webp" alt="Bright matcha drink with yuzu and ice" loading="lazy" /></div>
-          <footer><span>From — $7</span><button class="plus plus--light" data-add="yuzu" aria-label="Add Yuzu Sparkle">+</button></footer>
+          <h3 data-i18n="p.yuzu">Yuzu Sparkle</h3>
+          <div class="product__img"><img src="assets/img/d-yuzu.webp" alt="" loading="lazy" /></div>
+          <footer><span><span data-i18n="from">From</span> — $7</span><button class="plus plus--light" data-add="yuzu" aria-label="+">+</button></footer>
         </article>
 
         <article class="product" data-cat="ceremonial" data-reveal>
-          <h3>Koicha Shot</h3>
-          <div class="product__img"><img src="assets/img/d-dark.webp" alt="Dark layered matcha in a small glass on a wooden bar" loading="lazy" /></div>
-          <footer><span>From — $4.5</span><button class="plus" data-add="koicha" aria-label="Add Koicha Shot">+</button></footer>
+          <h3 data-i18n="p.koicha">Koicha Shot</h3>
+          <div class="product__img"><img src="assets/img/d-dark.webp" alt="" loading="lazy" /></div>
+          <footer><span><span data-i18n="from">From</span> — $4.5</span><button class="plus" data-add="koicha" aria-label="+">+</button></footer>
         </article>
       </div>
-      <p class="grid__empty" data-empty hidden>Nothing here yet — try another filter.</p>
+      <p class="grid__empty" data-empty hidden data-i18n="empty">Nothing here yet — try another filter.</p>
     </section>
 
     <!-- ================= RITUAL ================= -->
     <section class="ritual" id="ritual">
       <div class="ritual__sticky">
-        <span class="eyebrow">The Ritual · 04 steps</span>
-        <h2 class="display">From Leaf <em>To Cup</em><br>In Four Minutes</h2>
-        <p>Every cup follows the same slow sequence. It takes a little longer. You can taste why.</p>
+        <span class="eyebrow" data-i18n="rit.eyebrow">The Ritual · 04 steps</span>
+        <h2 class="display" data-i18n="rit.title">From Leaf <em>To Cup</em><br>In Four Minutes</h2>
+        <p data-i18n="rit.p">Every cup follows the same slow sequence. It takes a little longer. You can taste why.</p>
         <div class="ritual__progress" aria-hidden="true"><i data-ritual-bar></i></div>
       </div>
 
       <ol class="ritual__steps">
         <li class="step" data-step>
-          <div class="step__img"><img src="assets/img/r-powder.webp" alt="Matcha powder on a spoon beside a whisk" loading="lazy" /></div>
-          <div class="step__body"><span class="step__num">01</span><h3>Sift</h3><p>Two grams of ceremonial powder through a fine sieve — no clumps, no bitterness.</p></div>
+          <div class="step__img"><img src="assets/img/r-powder.webp" alt="" loading="lazy" /></div>
+          <div class="step__body"><span class="step__num">01</span><h3 data-i18n="s1.t">Sift</h3><p data-i18n="s1.p">Two grams of ceremonial powder through a fine sieve — no clumps, no bitterness.</p></div>
         </li>
         <li class="step" data-step>
-          <div class="step__img"><img src="assets/img/r-whisk.webp" alt="Bamboo whisk foaming bright green matcha" loading="lazy" /></div>
-          <div class="step__body"><span class="step__num">02</span><h3>Whisk</h3><p>80°C water, a bamboo chasen and a quick “M” motion until a fine, glossy crema forms.</p></div>
+          <div class="step__img"><img src="assets/img/r-whisk.webp" alt="" loading="lazy" /></div>
+          <div class="step__body"><span class="step__num">02</span><h3 data-i18n="s2.t">Whisk</h3><p data-i18n="s2.p">80°C water, a bamboo chasen and a quick “M” motion until a fine, glossy crema forms.</p></div>
         </li>
         <li class="step" data-step>
-          <div class="step__img"><img src="assets/img/r-make.webp" alt="A barista whisking matcha at the counter" loading="lazy" /></div>
-          <div class="step__body"><span class="step__num">03</span><h3>Pour</h3><p>Over cold-pressed oat or coconut milk and slow-frozen ice, layered so you see every shade.</p></div>
+          <div class="step__img"><img src="assets/img/r-make.webp" alt="" loading="lazy" /></div>
+          <div class="step__body"><span class="step__num">03</span><h3 data-i18n="s3.t">Pour</h3><p data-i18n="s3.p">Over cold-pressed oat or coconut milk and slow-frozen ice, layered so you see every shade.</p></div>
         </li>
         <li class="step" data-step>
-          <div class="step__img"><img src="assets/img/r-serve.webp" alt="Finished layered matcha latte with wooden stirrer" loading="lazy" /></div>
-          <div class="step__body"><span class="step__num">04</span><h3>Pause</h3><p>Stir, sip, put the phone down. That's the whole point.</p></div>
+          <div class="step__img"><img src="assets/img/r-serve.webp" alt="" loading="lazy" /></div>
+          <div class="step__body"><span class="step__num">04</span><h3 data-i18n="s4.t">Pause</h3><p data-i18n="s4.p">Stir, sip, put the phone down. That's the whole point.</p></div>
         </li>
       </ol>
     </section>
@@ -307,44 +310,44 @@
     <!-- ================= FULL MENU ================= -->
     <section class="menu" id="menu">
       <div class="menu__head">
-        <h2 class="display">The Menu</h2>
-        <div class="filters filters--menu" role="tablist" aria-label="Menu categories">
-          <button role="tab" aria-selected="true" data-menu-tab="matcha">Matcha</button>
-          <button role="tab" aria-selected="false" data-menu-tab="tea">Tea &amp; Coffee</button>
-          <button role="tab" aria-selected="false" data-menu-tab="kitchen">Kitchen</button>
+        <h2 class="display" data-i18n="menu.title">The Menu</h2>
+        <div class="filters filters--menu" role="tablist">
+          <button role="tab" aria-selected="true" data-menu-tab="matcha" data-i18n="menu.matcha">Matcha</button>
+          <button role="tab" aria-selected="false" data-menu-tab="tea" data-i18n="menu.tea">Tea &amp; Coffee</button>
+          <button role="tab" aria-selected="false" data-menu-tab="kitchen" data-i18n="menu.kitchen">Kitchen</button>
         </div>
       </div>
 
       <div class="menu__body">
         <figure class="menu__photo">
-          <img data-menu-photo src="assets/img/d-pour.webp" alt="Matcha poured into a glass of milk" loading="lazy" />
+          <img data-menu-photo src="assets/img/d-pour.webp" alt="" loading="lazy" />
         </figure>
         <div class="menu__lists" data-menu-list aria-live="polite"></div>
       </div>
     </section>
 
     <!-- ================= QUOTES ================= -->
-    <section class="quotes" aria-label="Guest reviews">
+    <section class="quotes">
       <div class="quotes__inner">
-        <span class="quotes__stars" aria-label="Rated 4.9 out of 5">★★★★★ <b>4.9</b> · 1,240 reviews</span>
+        <span class="quotes__stars" data-i18n="q.stars">★★★★★ <b>4.9</b> · 1,240 reviews</span>
         <div class="quotes__viewport">
           <blockquote class="quote is-active">
-            <p>“The only place in town where the matcha tastes like grass in the best possible way — sweet, deep, zero bitterness.”</p>
-            <cite>Daria K. · regular since 2024</cite>
+            <p data-i18n="q1.p">“The only place in town where the matcha tastes like grass in the best possible way — sweet, deep, zero bitterness.”</p>
+            <cite data-i18n="q1.c">Daria K. · regular since 2024</cite>
           </blockquote>
           <blockquote class="quote">
-            <p>“I came for the hojicha cloud and stayed for the quiet. It's my office every Tuesday.”</p>
-            <cite>Mark T. · product designer</cite>
+            <p data-i18n="q2.p">“I came for the hojicha cloud and stayed for the quiet. It's my office every Tuesday.”</p>
+            <cite data-i18n="q2.c">Mark T. · product designer</cite>
           </blockquote>
           <blockquote class="quote">
-            <p>“Watching them whisk each cup is weirdly calming. The yuzu sparkle is summer in a glass.”</p>
-            <cite>Iryna P. · food writer</cite>
+            <p data-i18n="q3.p">“Watching them whisk each cup is weirdly calming. The yuzu sparkle is summer in a glass.”</p>
+            <cite data-i18n="q3.c">Iryna P. · food writer</cite>
           </blockquote>
         </div>
-        <div class="quotes__dots" role="tablist" aria-label="Choose review">
-          <button aria-label="Review 1" aria-selected="true"></button>
-          <button aria-label="Review 2" aria-selected="false"></button>
-          <button aria-label="Review 3" aria-selected="false"></button>
+        <div class="quotes__dots" role="tablist">
+          <button aria-label="1" aria-selected="true"></button>
+          <button aria-label="2" aria-selected="false"></button>
+          <button aria-label="3" aria-selected="false"></button>
         </div>
       </div>
     </section>
@@ -353,49 +356,49 @@
     <section class="visit" id="visit">
       <div class="section-head">
         <h2 class="display">
-          <span class="reveal-line">A Quiet Room</span>
-          <span class="reveal-line indent">For <em>Loud Cities</em></span>
+          <span class="reveal-line" data-i18n="visit.l1">A Quiet Room</span>
+          <span class="reveal-line indent" data-i18n="visit.l2">For <em>Loud Cities</em></span>
         </h2>
       </div>
 
       <div class="bento">
-        <figure class="bento__a" data-reveal><img src="assets/img/s-interior.webp" alt="Long wooden bar facing a window with a tree outside" loading="lazy" /><figcaption>28 seats · window bar</figcaption></figure>
-        <figure class="bento__b" data-reveal><img src="assets/img/s-light.webp" alt="Bright dining room with rattan pendant lamps" loading="lazy" /></figure>
-        <figure class="bento__c" data-reveal><img src="assets/img/s-window.webp" alt="Rattan chairs by a large window" loading="lazy" /></figure>
+        <figure class="bento__a" data-reveal><img src="assets/img/s-interior.webp" alt="" loading="lazy" /><figcaption data-i18n="visit.seats">28 seats · window bar</figcaption></figure>
+        <figure class="bento__b" data-reveal><img src="assets/img/s-light.webp" alt="" loading="lazy" /></figure>
+        <figure class="bento__c" data-reveal><img src="assets/img/s-window.webp" alt="" loading="lazy" /></figure>
 
         <div class="bento__info" data-reveal>
           <div class="hours">
             <div class="hours__status"><span class="dot"></span><b data-open-badge>Open now</b></div>
             <dl>
-              <div><dt>Mon – Fri</dt><dd>8:00 – 20:00</dd></div>
-              <div><dt>Sat – Sun</dt><dd>9:00 – 21:00</dd></div>
+              <div><dt data-i18n="visit.wk">Mon – Fri</dt><dd>8:00 – 20:00</dd></div>
+              <div><dt data-i18n="visit.we">Sat – Sun</dt><dd>9:00 – 21:00</dd></div>
             </dl>
           </div>
           <address>
-            <span class="eyebrow">Find us</span>
-            14 Leafy Lane, Ground Floor<br>Old Town District
+            <span class="eyebrow" data-i18n="visit.find">Find us</span>
+            <span data-i18n="visit.addr">14 Leafy Lane, Ground Floor<br>Old Town District</span>
           </address>
         </div>
 
         <form class="book" data-reveal data-book novalidate>
-          <h3>Book a table</h3>
+          <h3 data-i18n="book.h3">Book a table</h3>
           <div class="book__row">
-            <label>Name<input name="name" required autocomplete="name" placeholder="Your name" /></label>
-            <label>Guests
+            <label><span data-i18n="book.name">Name</span><input name="name" required autocomplete="name" placeholder="Your name" data-i18n-ph="book.namePh" /></label>
+            <label><span data-i18n="book.guests">Guests</span>
               <select name="guests">
                 <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option>
               </select>
             </label>
           </div>
           <div class="book__row">
-            <label>Date<input type="date" name="date" required /></label>
-            <label>Time
+            <label><span data-i18n="book.date">Date</span><input type="date" name="date" required /></label>
+            <label><span data-i18n="book.time">Time</span>
               <select name="time">
                 <option>09:00</option><option>10:30</option><option selected>12:00</option><option>14:00</option><option>16:30</option><option>18:00</option>
               </select>
             </label>
           </div>
-          <button class="btn btn--dark" type="submit"><span class="btn__label">Reserve</span><span class="btn__icon">»</span></button>
+          <button class="btn btn--dark" type="submit"><span class="btn__label" data-i18n="book.btn">Reserve</span><span class="btn__icon">»</span></button>
           <p class="book__msg" data-book-msg role="status"></p>
         </form>
       </div>
@@ -405,8 +408,8 @@
     <section class="cta">
       <img class="cta__bg" src="assets/img/leaf.webp" alt="" loading="lazy" />
       <div class="cta__inner">
-        <h2 class="display display--light">Ancient Leaf.<br>Modern <em>Ritual.</em></h2>
-        <a class="btn btn--light" href="#signature"><span class="btn__label">Explore Cups</span><span class="btn__icon">»</span></a>
+        <h2 class="display display--light" data-i18n="cta.title">Ancient Leaf.<br>Modern <em>Ritual.</em></h2>
+        <a class="btn btn--light" href="#signature"><span class="btn__label" data-i18n="cta.btn">Explore Cups</span><span class="btn__icon">»</span></a>
       </div>
     </section>
   </main>
@@ -415,31 +418,31 @@
   <footer class="footer">
     <div class="footer__grid">
       <div class="footer__news">
-        <h3>One email a month.<br><em>Mostly about tea.</em></h3>
+        <h3 data-i18n="ft.title">One email a month.<br><em>Mostly about tea.</em></h3>
         <form class="news" data-news novalidate>
-          <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required />
-          <button class="btn btn--light btn--sm" type="submit"><span class="btn__label">Subscribe</span><span class="btn__icon">»</span></button>
+          <input type="email" name="email" placeholder="you@email.com" aria-label="Email" required />
+          <button class="btn btn--light btn--sm" type="submit"><span class="btn__label" data-i18n="ft.sub">Subscribe</span><span class="btn__icon">»</span></button>
         </form>
         <p class="news__msg" data-news-msg role="status"></p>
       </div>
-      <nav class="footer__col" aria-label="Footer">
-        <span class="eyebrow">Explore</span>
-        <a href="#signature">Signature cups</a>
-        <a href="#ritual">The ritual</a>
-        <a href="#menu">Full menu</a>
-        <a href="#visit">Visit &amp; book</a>
+      <nav class="footer__col">
+        <span class="eyebrow" data-i18n="ft.explore">Explore</span>
+        <a href="#signature" data-i18n="ft.sig">Signature cups</a>
+        <a href="#ritual" data-i18n="ft.rit">The ritual</a>
+        <a href="#menu" data-i18n="ft.menu">Full menu</a>
+        <a href="#visit" data-i18n="nav.book">Visit &amp; book</a>
       </nav>
       <div class="footer__col">
-        <span class="eyebrow">Say hi</span>
+        <span class="eyebrow" data-i18n="ft.hi">Say hi</span>
         <a href="#visit">hello@usucha.cafe</a>
         <a href="#visit">Instagram</a>
-        <a href="#visit">Wholesale</a>
+        <a href="#visit" data-i18n="ft.whole">Wholesale</a>
       </div>
     </div>
     <div class="footer__word" aria-hidden="true">USUCHA</div>
     <div class="footer__bottom">
-      <span>© 2026 USUCHA — a concept project, not a real café.</span>
-      <span>Photos via <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> · <a href="https://github.com/ttjelky/usucha" target="_blank" rel="noopener">Source on GitHub</a></span>
+      <span data-i18n="ft.copy">© 2026 USUCHA — a concept project, not a real café.</span>
+      <span data-i18n="ft.credits">Photos via <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> · <a href="https://github.com/ttjelky/usucha" target="_blank" rel="noopener">Source on GitHub</a></span>
     </div>
   </footer>
 
@@ -448,23 +451,28 @@
     <div class="drawer__scrim" data-close-cart></div>
     <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
       <header class="drawer__head">
-        <h2 id="cart-title">Your order</h2>
-        <button class="drawer__close" data-close-cart aria-label="Close order">✕</button>
+        <h2 id="cart-title" data-i18n="cart.title">Your order</h2>
+        <button class="drawer__close" data-close-cart aria-label="✕">✕</button>
       </header>
       <ul class="drawer__items" data-cart-items></ul>
-      <p class="drawer__empty" data-cart-empty>Your cup is empty. Add something green.</p>
+      <p class="drawer__empty" data-cart-empty data-i18n="cart.empty">Your cup is empty. Add something green.</p>
       <footer class="drawer__foot">
-        <div class="drawer__total"><span>Total</span><b data-cart-total>$0.00</b></div>
-        <label class="drawer__pickup">Pick-up
-          <select><option>As soon as possible (~8 min)</option><option>In 30 minutes</option><option>In 1 hour</option></select>
+        <div class="drawer__total"><span data-i18n="cart.total">Total</span><b data-cart-total>$0.00</b></div>
+        <label class="drawer__pickup"><span data-i18n="cart.pickup">Pick-up</span>
+          <select>
+            <option data-i18n="cart.o1">As soon as possible (~8 min)</option>
+            <option data-i18n="cart.o2">In 30 minutes</option>
+            <option data-i18n="cart.o3">In 1 hour</option>
+          </select>
         </label>
-        <button class="btn btn--dark btn--block" data-checkout><span class="btn__label">Place order</span><span class="btn__icon">»</span></button>
+        <button class="btn btn--dark btn--block" data-checkout><span class="btn__label" data-i18n="cart.place">Place order</span><span class="btn__icon">»</span></button>
       </footer>
     </aside>
   </div>
 
   <div class="toast" data-toast role="status" aria-live="polite"></div>
 
+  <script src="i18n.js" defer></script>
   <script src="main.js" defer></script>
 </body>
 </html>

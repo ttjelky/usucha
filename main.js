@@ -4,70 +4,96 @@
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const IMG = 'assets/img/';
+  const I = window.I18N;
 
   /* ---------- Data ---------- */
   const PRODUCTS = {
-    'ceremonial': { name: 'Ceremonial Usucha', price: 6.5, img: 'd-classic.webp' },
-    'uji-latte':  { name: 'Iced Uji Latte',    price: 6,   img: 'd-cloud.webp' },
-    'hojicha':    { name: 'Hojicha Cloud',     price: 6,   img: 'd-oat.webp' },
-    'strawberry': { name: 'Strawberry Matcha', price: 7,   img: 'd-berry.webp' },
-    'coconut':    { name: 'Coconut Split',     price: 6.5, img: 'd-layer.webp' },
-    'yuzu':       { name: 'Yuzu Sparkle',      price: 7,   img: 'd-yuzu.webp' },
-    'koicha':     { name: 'Koicha Shot',       price: 4.5, img: 'd-dark.webp' },
-    'genmaicha':  { name: 'Genmaicha Latte',   price: 5.5, img: 'r-make.webp' },
-    'sencha':     { name: 'Cold-brew Sencha',  price: 4.5, img: 'r-powder.webp' },
-    'espresso':   { name: 'Matcha Espresso Fusion', price: 6.5, img: 'd-pour.webp' },
-    'onigiri':    { name: 'Salmon Onigiri',    price: 5,   img: 's-interior.webp' },
-    'toast':      { name: 'Matcha Milk Toast', price: 7.5, img: 's-light.webp' },
-    'sando':      { name: 'Tamago Sando',      price: 8.5, img: 's-window.webp' },
-    'mochi':      { name: 'Matcha Mochi (3)',  price: 4,   img: 'hand-bowl.webp' },
-    'cheesecake': { name: 'Basque Matcha Cheesecake', price: 6, img: 'whisk-bowl.webp' },
+    'ceremonial': { price: 6.5, img: 'd-classic.webp' },
+    'uji-latte':  { price: 6,   img: 'd-cloud.webp' },
+    'hojicha':    { price: 6,   img: 'd-oat.webp' },
+    'strawberry': { price: 7,   img: 'd-berry.webp' },
+    'coconut':    { price: 6.5, img: 'd-layer.webp' },
+    'yuzu':       { price: 7,   img: 'd-yuzu.webp' },
+    'koicha':     { price: 4.5, img: 'd-dark.webp' },
+    'genmaicha':  { price: 5.5, img: 'r-make.webp' },
+    'sencha':     { price: 4.5, img: 'r-powder.webp' },
+    'espresso':   { price: 6.5, img: 'd-pour.webp' },
+    'onigiri':    { price: 5,   img: 's-interior.webp' },
+    'toast':      { price: 7.5, img: 's-light.webp' },
+    'sando':      { price: 8.5, img: 's-window.webp' },
+    'mochi':      { price: 4,   img: 'hand-bowl.webp' },
+    'cheesecake': { price: 6,   img: 'whisk-bowl.webp' },
   };
 
   const MENU = {
-    matcha: {
-      photo: 'd-pour.webp',
-      groups: [
-        { title: 'Signatures', items: [
-          ['uji-latte', 'Iced latte, first-harvest Uji, oat or whole milk', 'Bestseller'],
-          ['ceremonial', 'Pure usucha, whisked thin, served warm or over ice'],
-          ['coconut', 'Matcha poured over chilled coconut milk'],
-          ['strawberry', 'House strawberry purée, milk, ceremonial shot', 'Seasonal'],
-          ['yuzu', 'Sparkling yuzu tonic topped with matcha'],
-        ]},
-        { title: 'Pure', items: [
-          ['koicha', 'Thick, syrup-like matcha — for the brave'],
-          ['espresso', 'Half matcha, half single-origin espresso', 'New'],
-        ]},
-      ],
-    },
-    tea: {
-      photo: 'r-whisk.webp',
-      groups: [
-        { title: 'Roasted & Green', items: [
-          ['hojicha', 'Roasted green tea latte, caramel notes, cold foam'],
-          ['genmaicha', 'Toasted rice tea with steamed oat milk'],
-          ['sencha', '12-hour cold brew, served in a carafe'],
-        ]},
-      ],
-    },
-    kitchen: {
-      photo: 's-interior.webp',
-      groups: [
-        { title: 'Savory', items: [
-          ['onigiri', 'Grilled salmon, shiso, nori — made each morning'],
-          ['sando', 'Soft egg salad on milk bread, Kewpie, chives'],
-        ]},
-        { title: 'Sweet', items: [
-          ['toast', 'Thick-cut milk bread, matcha butter, sea salt', 'Bestseller'],
-          ['cheesecake', 'Burnt top, molten matcha centre'],
-          ['mochi', 'Hand-rolled, filled with matcha cream'],
-        ]},
-      ],
-    },
+    matcha: { photo: 'd-pour.webp', groups: [
+      ['signatures', [['uji-latte', 'best'], ['ceremonial'], ['coconut'], ['strawberry', 'season'], ['yuzu']]],
+      ['pure', [['koicha'], ['espresso', 'new']]],
+    ]},
+    tea: { photo: 'r-whisk.webp', groups: [
+      ['roasted', [['hojicha'], ['genmaicha'], ['sencha']]],
+    ]},
+    kitchen: { photo: 's-interior.webp', groups: [
+      ['savory', [['onigiri'], ['sando']]],
+      ['sweet', [['toast', 'best'], ['cheesecake'], ['mochi']]],
+    ]},
   };
 
+  /* ---------- Storage (safe) ---------- */
+  const store = {
+    get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  };
+
+  /* ---------- Language ---------- */
+  let lang = document.documentElement.lang === 'uk' ? 'uk' : 'en';
+  const D = () => I.dyn[lang];
+  const pname = (id) => I.products[lang][id];
   const money = (n) => '$' + n.toFixed(2);
+
+  // remember the English originals that live in the HTML
+  const originals = new Map();
+  const remember = (el, attr) => {
+    if (!originals.has(el)) originals.set(el, {});
+    const o = originals.get(el);
+    if (!(attr in o)) o[attr] = attr === 'html' ? el.innerHTML : el.getAttribute(attr);
+    return o[attr];
+  };
+
+  const applyStatic = () => {
+    const dict = I.uk;
+    $$('[data-i18n]').forEach((el) => {
+      const en = remember(el, 'html');
+      const val = lang === 'uk' ? dict[el.dataset.i18n] : en;
+      if (val != null && el.innerHTML !== val) el.innerHTML = val;
+    });
+    [['data-i18n-ph', 'placeholder'], ['data-i18n-alt', 'alt'], ['data-i18n-aria', 'aria-label']].forEach(([key, attr]) => {
+      $$(`[${key}]`).forEach((el) => {
+        const en = remember(el, attr);
+        const val = lang === 'uk' ? dict[el.getAttribute(key)] : en;
+        if (val != null) el.setAttribute(attr, val);
+      });
+    });
+    document.title = I.meta[lang].title;
+    $('meta[name="description"]').setAttribute('content', I.meta[lang].desc);
+    $$('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.lang === lang));
+    // product + buttons get a readable label
+    $$('[data-add]').forEach((b) => b.setAttribute('aria-label', D().add(pname(b.dataset.add))));
+  };
+
+  const setLang = (l) => {
+    lang = l === 'uk' ? 'uk' : 'en';
+    document.documentElement.lang = lang;
+    try { localStorage.setItem('usucha-lang', lang); } catch {}
+    const url = new URL(location.href);
+    if (url.searchParams.has('lang')) { url.searchParams.set('lang', lang); history.replaceState(null, '', url); }
+    applyStatic();
+    renderMenu(currentMenu);
+    renderCart();
+    status();
+    $('[data-book-msg]').textContent = '';
+    $('[data-news-msg]').textContent = '';
+  };
 
   /* ---------- Toast ---------- */
   const toastEl = $('[data-toast]');
@@ -77,12 +103,6 @@
     toastEl.classList.add('is-on');
     clearTimeout(toastT);
     toastT = setTimeout(() => toastEl.classList.remove('is-on'), 2600);
-  };
-
-  /* ---------- Storage (safe) ---------- */
-  const store = {
-    get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
-    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
   };
 
   /* ---------- Cart ---------- */
@@ -102,14 +122,14 @@
     $('[data-cart-empty]').hidden = count > 0;
     $('[data-checkout]').disabled = count === 0;
     itemsEl.innerHTML = keys.map((k) => {
-      const p = PRODUCTS[k];
+      const p = PRODUCTS[k], n = pname(k);
       return `<li>
         <img src="${IMG + p.img}" alt="" />
-        <div><div class="name">${p.name}</div><div class="price">${money(p.price)}</div></div>
-        <div class="qty" aria-label="Quantity of ${p.name}">
-          <button data-dec="${k}" aria-label="Remove one ${p.name}">−</button>
+        <div><div class="name">${n}</div><div class="price">${money(p.price)}</div></div>
+        <div class="qty">
+          <button data-dec="${k}" aria-label="${D().qtyMinus(n)}">−</button>
           <span>${cart[k]}</span>
-          <button data-inc="${k}" aria-label="Add one ${p.name}">+</button>
+          <button data-inc="${k}" aria-label="${D().qtyPlus(n)}">+</button>
         </div>
       </li>`;
     }).join('');
@@ -120,7 +140,7 @@
     if (!PRODUCTS[id]) return;
     cart[id] = (cart[id] || 0) + 1;
     renderCart();
-    toast(`${PRODUCTS[id].name} added to your order`);
+    toast(D().added(pname(id)));
     cartBtn.classList.remove('bump'); void cartBtn.offsetWidth; cartBtn.classList.add('bump');
     if (btn) { btn.classList.remove('is-added'); void btn.offsetWidth; btn.classList.add('is-added'); }
   };
@@ -141,22 +161,22 @@
   };
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open-cart],[data-close-cart],[data-checkout]');
+    const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open-cart],[data-close-cart],[data-checkout],[data-lang]');
     if (!t) return;
-    if (t.dataset.add) add(t.dataset.add, t);
+    if (t.dataset.lang) { if (t.dataset.lang !== lang) setLang(t.dataset.lang); }
+    else if (t.dataset.add) add(t.dataset.add, t);
     else if (t.dataset.inc) { cart[t.dataset.inc]++; renderCart(); }
     else if (t.dataset.dec) { const k = t.dataset.dec; if (--cart[k] <= 0) delete cart[k]; renderCart(); }
     else if (t.hasAttribute('data-open-cart')) openCart();
     else if (t.hasAttribute('data-close-cart')) closeCart();
     else if (t.hasAttribute('data-checkout')) {
       cart = {}; renderCart(); closeCart();
-      toast('Order placed — see you in ~8 min. (Demo: nothing was charged)');
+      toast(D().placed);
     }
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeCart();
   });
-  renderCart();
 
   /* ---------- Header / burger ---------- */
   const header = $('.header');
@@ -164,7 +184,6 @@
   const mnav = $('[data-mobile-nav]');
   const toggleNav = (open) => {
     burger.setAttribute('aria-expanded', open);
-    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     mnav.hidden = !open;
   };
   burger.addEventListener('click', () => toggleNav(mnav.hidden));
@@ -189,18 +208,20 @@
   /* ---------- Full menu ---------- */
   const listEl = $('[data-menu-list]');
   const photo = $('[data-menu-photo]');
+  let currentMenu = 'matcha';
   const renderMenu = (key) => {
-    const m = MENU[key];
+    currentMenu = key;
+    const m = MENU[key], t = I.menu[lang];
     $$('[data-menu-tab]').forEach((b) => b.setAttribute('aria-selected', b.dataset.menuTab === key));
-    listEl.innerHTML = m.groups.map((g) => `
+    listEl.innerHTML = m.groups.map(([g, items]) => `
       <div class="menu-group">
-        <h3>${g.title}</h3>
-        ${g.items.map(([id, desc, badge], i) => `
+        <h3>${t.groups[g]}</h3>
+        ${items.map(([id, badge], i) => `
           <div class="menu-item" style="animation-delay:${i * 50}ms">
-            <span class="menu-item__name">${PRODUCTS[id].name}${badge ? `<small>${badge}</small>` : ''}</span>
+            <span class="menu-item__name">${pname(id)}${badge ? `<small>${t.badges[badge]}</small>` : ''}</span>
             <span class="menu-item__price">${money(PRODUCTS[id].price)}</span>
-            <button class="plus" data-add="${id}" aria-label="Add ${PRODUCTS[id].name}">+</button>
-            <span class="menu-item__desc">${desc}</span>
+            <button class="plus" data-add="${id}" aria-label="${D().add(pname(id))}">+</button>
+            <span class="menu-item__desc">${t.desc[id]}</span>
           </div>`).join('')}
       </div>`).join('');
     if (!photo.src.endsWith(m.photo)) {
@@ -210,20 +231,26 @@
     }
   };
   $$('[data-menu-tab]').forEach((b) => b.addEventListener('click', () => renderMenu(b.dataset.menuTab)));
-  renderMenu('matcha');
 
-  /* ---------- Open status (venue local time) ---------- */
+  /* ---------- Open status (visitor's local time) ---------- */
   const status = () => {
     const now = new Date();
     const d = now.getDay(), h = now.getHours() + now.getMinutes() / 60;
     const wk = d >= 1 && d <= 5;
     const [o, c] = wk ? [8, 20] : [9, 21];
     const open = h >= o && h < c;
-    const label = open ? `Open now · until ${c}:00` : `Closed · opens ${h < o ? 'at' : 'tomorrow'} ${h < o ? o : (d === 5 || d === 6 ? 9 : 8)}:00`;
+    const tomorrowOpens = (d === 5 || d === 6) ? 9 : 8;
+    const label = open ? D().openUntil(c) : (h < o ? D().closedAt(o) : D().closedTomorrow(tomorrowOpens));
     $('[data-open-status]').textContent = label;
-    $('[data-open-badge]').textContent = open ? 'Open now' : 'Closed right now';
+    $('[data-open-badge]').textContent = open ? D().badgeOpen : D().badgeClosed;
     $$('.dot').forEach((el) => el.classList.toggle('is-closed', !open));
   };
+
+  /* ---------- Initial render ---------- */
+  applyStatic();
+  document.documentElement.classList.add('i18n-ready');
+  renderMenu('matcha');
+  renderCart();
   status();
 
   /* ---------- Count-up ---------- */
@@ -247,7 +274,7 @@
     });
   }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
   $$('[data-reveal], .section-head').forEach((el) => io.observe(el));
-  $$('.grid [data-reveal]').forEach((el, i) => el.style.setProperty('--d', `${(i % 4) * 70}ms`));
+  $$('.grid [data-reveal]').forEach((el, i) => el.style.setProperty('--d', `${(i % 3) * 70}ms`));
   $$('.bento [data-reveal]').forEach((el, i) => el.style.setProperty('--d', `${i * 70}ms`));
 
   /* ---------- Quotes ---------- */
@@ -277,11 +304,11 @@
       i.classList.toggle('is-invalid', bad);
       if (bad) ok = false;
     });
-    if (!ok) { msg.style.color = '#f0b48e'; msg.textContent = 'Please add your name and a date.'; return; }
+    if (!ok) { msg.style.color = '#f0b48e'; msg.textContent = D().bookErr; return; }
     const f = new FormData(book);
-    const when = new Date(f.get('date') + 'T00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+    const when = new Date(f.get('date') + 'T00:00').toLocaleDateString(D().locale, { weekday: 'short', day: 'numeric', month: 'short' });
     msg.style.color = '';
-    msg.textContent = `Table for ${f.get('guests')} on ${when}, ${f.get('time')}. See you, ${f.get('name').split(' ')[0]}!`;
+    msg.textContent = D().bookOk(f.get('guests'), when, f.get('time'), f.get('name').trim().split(' ')[0]);
     book.reset();
   });
 
@@ -290,8 +317,9 @@
     e.preventDefault();
     const email = $('input', news).value.trim();
     const out = $('[data-news-msg]');
-    out.textContent = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'You’re in. First letter lands next month.' : 'That email looks a little off.';
-    if (out.textContent.startsWith('You')) news.reset();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    out.textContent = ok ? D().newsOk : D().newsBad;
+    if (ok) news.reset();
   });
 
   /* ---------- Scroll-linked effects ---------- */
@@ -313,7 +341,7 @@
       parallax.forEach((el) => {
         const r = el.parentElement.getBoundingClientRect();
         if (r.bottom < 0 || r.top > vh) return;
-        el.style.transform = `translate3d(0, ${(r.top) * -+el.dataset.parallax}px, 0)`;
+        el.style.transform = `translate3d(0, ${r.top * -+el.dataset.parallax}px, 0)`;
       });
     }
 

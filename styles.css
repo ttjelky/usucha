@@ -29,6 +29,18 @@
   --ease-out: cubic-bezier(.16, 1, .3, 1);
 }
 
+/* Ukrainian: Instrument fonts have no Cyrillic, swap to close matches */
+html[lang="uk"] {
+  --sans: "Onest", "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --serif: "Playfair Display", "Instrument Serif", ui-serif, Georgia, serif;
+}
+html[lang="uk"] em { font-size: .94em; letter-spacing: -.02em; }
+html[lang="uk"] .hero__title { letter-spacing: -.055em; }
+html[lang="uk"] .display { letter-spacing: -.04em; }
+/* avoid a flash of English before translations apply */
+html[lang="uk"]:not(.i18n-ready) body { opacity: 0; animation: i18n-fallback 0s 1.2s forwards; }
+@keyframes i18n-fallback { to { opacity: 1; } }
+
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -117,6 +129,17 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .plus--light { background: var(--cream); color: var(--green-800); }
 .plus.is-added { animation: pop .5s var(--ease); }
 @keyframes pop { 40% { transform: scale(1.25); } }
+
+/* ---------- Language switch ---------- */
+.lang { display: inline-flex; padding: 3px; border-radius: 99px; background: var(--card); }
+.lang button {
+  height: 32px; min-width: 38px; padding: 0 10px; border-radius: 99px;
+  font-size: 12px; font-weight: 600; letter-spacing: .06em; color: var(--muted);
+  font-family: "Instrument Sans", "Onest", sans-serif;
+  transition: background .3s, color .3s;
+}
+.lang button:hover { color: var(--green-800); }
+.lang button[aria-pressed="true"] { background: var(--cream); color: var(--green-800); box-shadow: 0 1px 3px rgba(29,58,34,.12); }
 
 /* ---------- Header ---------- */
 .header {
@@ -701,6 +724,10 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 @media (max-width: 600px) {
   .btn--cart .btn__label { display: none; }
   .btn--cart { padding: 4px; }
+  .logo { font-size: 17px; gap: 6px; }
+  .logo__mark { width: 22px; height: 22px; }
+  .lang button { min-width: 32px; padding: 0 7px; height: 30px; }
+  .header__actions { gap: 6px; }
   .hero__title { font-size: clamp(56px, 19vw, 96px); }
   .hero__media { height: 620px; border-radius: var(--r-md); }
   .hero__card { width: 190px; right: 12px; bottom: 74px; }

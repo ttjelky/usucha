@@ -2,7 +2,7 @@
 
 A concept website for a fictional matcha bar, built as a portfolio piece.
 
-**Live:** https://ttjelky.github.io/usucha/
+**Live:** https://ttjelky.github.io/usucha/ · [українською](https://ttjelky.github.io/usucha/?lang=uk)
 
 ## Highlights
 
@@ -14,6 +14,7 @@ A concept website for a fictional matcha bar, built as a portfolio piece.
 - Live open/closed status, table booking and newsletter forms with validation
 - Parallax hero, pointer tilt, marquee, count-up and reveal animations
 - Responsive from 360px to wide desktop; respects `prefers-reduced-motion`
+- English / Ukrainian (EN · UA switch, remembered per visitor, `?lang=uk` links, auto-detects browser language; Cyrillic-ready fonts)
 - Zero dependencies — plain HTML, CSS and JavaScript, no build step
 
 ## Run locally
