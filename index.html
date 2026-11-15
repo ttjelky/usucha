@@ -23,7 +23,9 @@
     (function () {
       var q = new URLSearchParams(location.search).get('lang'), s;
       try { s = localStorage.getItem('usucha-lang'); } catch (e) {}
-      var l = q || s || ((navigator.language || '').toLowerCase().indexOf('uk') === 0 ? 'uk' : 'en');
+      var dev = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || '']);
+      var isUk = dev.some(function (x) { return /^(uk|ru|be)\b/i.test(x); });
+      var l = q || s || (isUk ? 'uk' : 'en');
       document.documentElement.lang = l === 'uk' ? 'uk' : 'en';
     })();
   </script>
@@ -50,10 +52,6 @@
     </a>
 
     <div class="header__actions">
-      <div class="lang" role="group" aria-label="Language / Мова">
-        <button data-lang="en" aria-pressed="true" lang="en">EN</button>
-        <button data-lang="uk" aria-pressed="false" lang="uk">UA</button>
-      </div>
       <button class="btn btn--dark btn--cart" data-open-cart data-i18n-aria="aria.openCart" aria-label="Open your order">
         <span class="btn__label" data-i18n="orderAhead">Order Ahead</span>
         <span class="btn__icon">
@@ -443,6 +441,9 @@
     <div class="footer__bottom">
       <span data-i18n="ft.copy">© 2026 USUCHA — a concept project, not a real café.</span>
       <span data-i18n="ft.credits">Photos via <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> · <a href="https://github.com/ttjelky/usucha" target="_blank" rel="noopener">Source on GitHub</a></span>
+      <span class="lang" role="group" aria-label="Language / Мова">
+        <button data-lang="en" aria-pressed="true" lang="en">English</button><i aria-hidden="true">/</i><button data-lang="uk" aria-pressed="false" lang="uk">Українська</button>
+      </span>
     </div>
   </footer>
 
